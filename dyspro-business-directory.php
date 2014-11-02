@@ -16,22 +16,28 @@ register_activation_hook (__FILE__, 'dbd_activate');
 register_deactivation_hook(__FILE__, 'dbd_deactivate');
 register_uninstall_hook (__FILE__, 'dbd_uninstall');
 
+// setup initialization actions
+add_action('init', 'dbd_register_business_post_type');
+
 // run when activating the plugin
 function dbd_activate () {
 
     // add the business member user role
-    add_role('dbd_member', DBD_ROLE_DISPLAY_NAME, array (
-        'edit_posts' => true,
-        'edit_published_posts' => true,
-        'read' => true,
-        'upload_files' => true,
-        'edit_dbd_post' => true,
-        'read_dbd_post' => true,
-        'delete_dbd_post' => true,
-        'edit_dbd_posts' => true,
-        'edit_others_dbd_posts' => true,
-        'publish_dbd_posts' => true,
-        'read_private_dbd_posts' => true
+    add_role(
+        DBD_ROLE_NAME,
+        DBD_ROLE_DISPLAY_NAME,
+        array (
+            'edit_posts' => true,
+            'edit_published_posts' => true,
+            'read' => true,
+            'upload_files' => true,
+            'edit_dbd_post' => true,
+            'read_dbd_post' => true,
+            'delete_dbd_post' => true,
+            'edit_dbd_posts' => true,
+            'edit_others_dbd_posts' => true,
+            'publish_dbd_posts' => true,
+            'read_private_dbd_posts' => true
     ));
 
     // add roles to administrator
@@ -74,6 +80,53 @@ function dbd_uninstall () {
 
 }
 
+// add the business post type - this is loaded on init
+function dbd_register_business_post_type () {
 
+    register_post_type (
+        DBD_POST_TYPE_NAME,
+        array(
+            'labels' => array (
+                'name' => 'Directory Listings',
+                'singular_name' => 'Directory Listing',
+                'add_new' => 'Add New',
+                'add_new_item' => 'Add New Directory Listing',
+                'edit_item' => 'Edit Directory Listing'
+            ),
+            'public' => true,
+            'publicly_queryable' => true,
+            'exclude_from_search' => true,
+            'show_ui' => true,
+            'show_in_menu' => true,
+            'query_var' => true,
+            'capability_type' => DBD_ROLE_NAME,
+            'rewrite' => array(
+                'slug'=> 'directory',
+                'with_front'=> false,
+                'feeds'=> true,
+                'pages'=> true
+            ),
+            'capabilities' => array (
+                'edit_post' => 'edit_dbd_post',
+                'read_post' => 'read_dbd_post',
+                'delete_post' => 'delete_dbd_post',
+                'edit_posts' => 'edit_dbd_posts',
+                'edit_others_posts' => 'edit_others_dbd_posts',
+                'publish_posts' => 'publish_dbd_posts',
+                'read_private_posts' => 'read_private_dbd_posts'
+            ),
+            'has_archive' => false,
+            'hierarchical' => true,
+            'menu_icon' => 'dashicons-id',
+            'menu_position' => 20,
+            'supports' => array(
+                'thumbnail',
+                'title',
+                'editor'
+            )
+        )
+    );
+
+}
 
 ?>
