@@ -16,8 +16,12 @@ register_activation_hook (__FILE__, 'dbd_activate');
 register_deactivation_hook(__FILE__, 'dbd_deactivate');
 register_uninstall_hook (__FILE__, 'dbd_uninstall');
 
-// setup initialization actions
-add_action('init', 'dbd_register_business_post_type');
+// initialize objects
+$dsd_location_manager = new dsd_location_manager ();
+
+// set up actions
+add_action ('init', 'dbd_register_business_post_type');
+add_action ('add_meta_boxes', array ($dsd_location_manager, 'add_meta_boxes'));
 
 // run when activating the plugin
 function dbd_activate () {
@@ -50,6 +54,16 @@ function dbd_activate () {
     $admin_role->add_cap ('publish_dbd_posts');
     $admin_role->add_cap ('read_private_dbd_posts');
 
+    // add roles to editor
+    $editor_role = get_role ('editor');
+    $editor_role->add_cap ('edit_dbd_post');
+    $editor_role->add_cap ('read_dbd_post');
+    $editor_role->add_cap ('delete_dbd_post');
+    $editor_role->add_cap ('edit_dbd_posts');
+    $editor_role->add_cap ('edit_others_dbd_posts');
+    $editor_role->add_cap ('publish_dbd_posts');
+    $editor_role->add_cap ('read_private_dbd_posts');
+
     // flush the rewrite rules
     flush_rewrite_rules ();
 
@@ -59,7 +73,7 @@ function dbd_activate () {
 function dbd_deactivate () {
 
     // remove the business user role
-    remove_role ('dbd_member');
+    remove_role (DBD_ROLE_NAME);
 
     // remove custom roles from administrator
     $admin_role = get_role ('administrator');
@@ -70,6 +84,16 @@ function dbd_deactivate () {
     $admin_role->remove_cap ('edit_others_dbd_posts');
     $admin_role->remove_cap ('publish_dbd_posts');
     $admin_role->remove_cap ('read_private_dbd_posts');
+
+    // remove custom roles from editor
+    $editor_role = get_role ('editor');
+    $editor_role->remove_cap ('edit_dbd_post');
+    $editor_role->remove_cap ('read_dbd_post');
+    $editor_role->remove_cap ('delete_dbd_post');
+    $editor_role->remove_cap ('edit_dbd_posts');
+    $editor_role->remove_cap ('edit_others_dbd_posts');
+    $editor_role->remove_cap ('publish_dbd_posts');
+    $editor_role->remove_cap ('read_private_dbd_posts');
 
 }
 

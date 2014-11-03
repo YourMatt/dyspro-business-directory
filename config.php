@@ -12,13 +12,4 @@ define ('DBD_TABLE_USERS', $wpdb->prefix . 'users');
 define ('DBD_TABLE_POSTS', $wpdb->prefix . 'posts');
 
 // load support files
-/*
-require_once(BIDI_BASE_PATH . '/classes/class_business_directory_listing.php');
-
-define('BIZDIRPATH',dirname(__FILE__)."/");
-define('BIZDIRRELATIVEPATH',"/wp-content/plugins/business-directory/");
-define('BIZDIRCALLBACK',get_option("siteurl").BIZDIRRELATIVEPATH);
-define('BIZDIRDBTABLE',$wpdb->prefix."biz_listings");
-define('BIZDIRCATTABLE', $wpdb->prefix."biz_categories");
-define('PERPAGE',30);
-*/
+require_once (DBD_BASE_PATH . '/classes/dsd-location-manager.php');
