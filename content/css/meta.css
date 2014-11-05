@@ -1,0 +1,21 @@
+
+div.dbd-meta-location table {
+	width: 100%;
+	padding-right: 15px;
+}
+div.dbd-meta-location table td.col1 {
+	width: 20%;
+}
+div.dbd-meta-location table td.col2 {
+	width: 30%;
+}
+div.dbd-meta-location table td.col3 {
+	width: 50%;
+}
+
+div.dbd-meta-location #dsd-meta-location-map {
+	background-color: #eee;
+	display: block;
+	width: 100%;
+	margin: 2px 10px;
+}
