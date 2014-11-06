@@ -6,7 +6,7 @@
     </td><td class="col2">
         <input type="text" name="loc_address1" maxlength="30"/>
     </td><td rowspan="5" class="col3">
-        <div id="dsd-meta-location-map"></div>
+        <div id="dbd-meta-location-map"></div>
     </td></tr>
     <tr><td>
         <label for="loc_address2">Address 2</label>

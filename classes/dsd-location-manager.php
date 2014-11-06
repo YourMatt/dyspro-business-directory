@@ -11,6 +11,7 @@ class dsd_location_manager {
 
         // add scripts and styles for the meta boxes
         wp_enqueue_script ('dbd_location_js', DBD_BASE_WEB_PATH . 'content/js/meta-location.js', array ('jquery'));
+        wp_enqueue_script ('dbd_location_maps_js', 'https://maps.googleapis.com/maps/api/js?key=' . DBD_GOOGLE_MAPS_API_KEY);
         wp_enqueue_style ('dbd_location_css', DBD_BASE_WEB_PATH . 'content/css/meta.css');
 
         // create the location meta box

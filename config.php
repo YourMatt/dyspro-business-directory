@@ -18,6 +18,7 @@ define ('DBD_TABLE_POSTS', $wpdb->prefix . 'posts');
 // control options - TODO: Move all of these to configuration options
 define ('DBD_FORCED_STATE', 'WY');
 define ('DBD_DEFAULT_USER_PASSWORD', 'business'); // when adding a new company, this will be the initial password for the user account
+define ('DBD_GOOGLE_MAPS_API_KEY', 'AIzaSyCRyolrfuh3vrUSB6q8phhBU2dT6JNhgYY');
 
 // load support files
 require_once (DBD_BASE_PATH . '/classes/dsd-location-manager.php');
