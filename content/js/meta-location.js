@@ -19,6 +19,9 @@ $(window).resize (function () {
 
 var dbd_location_meta = {
 
+   map: null,
+   map_marker: null,
+
    set_map_size: function (reset_first) {
 
       // if reset option, then clear current height - prevents cell height growth when resizing to thinner page
@@ -36,32 +39,34 @@ var dbd_location_meta = {
 
       // set up the map to the current address
       // TODO: Skip the geocode if the lat/lng are already present
-      // TODO: Load the default address from fields on page
       var geocoder = new google.maps.Geocoder ();
-      geocoder.geocode ( { address: "WY, US" }, function (results, status) {
+      geocoder.geocode ( { address: $("input[name=loc_map_default_center_location]").val () }, function (results, status) {
          if (status != google.maps.GeocoderStatus.OK) return;
 
+         // set up the map
          var centerCoords = results[0].geometry.location;
-
          var mapOptions = {
             center: centerCoords,
-            zoom: 5, // TODO: pull from configuration
+            zoom: parseInt ($("input[name=loc_map_default_zoom]").val ()),
             zoomControl: false,
             streetViewControl: false,
             scrollWheel: false,
             scaleControl: false,
             panControl: false,
             mapTypeControl: false,
-            mapTypeId: google.maps.MapTypeId.TERRAIN, // TODO: pull from configuration
-            draggable: false
+            mapTypeId: eval ("google.maps.MapTypeId." + $("input[name=loc_map_type]").val ())
          };
 
-         var map = new google.maps.Map (
+         dbd_location_meta.map = new google.maps.Map (
             $("#dbd-meta-location-map").get(0),
             mapOptions
          );
 
-         // TODO: Add map marker
+         // add a marker at the default location - this will move as the user enters the address
+         dbd_location_meta.map_marker = new google.maps.Marker ({
+            position: centerCoords,
+            map: dbd_location_meta.map
+         });
 
       });
 

@@ -34,4 +34,8 @@
     </td></tr>
     </table>
 
+    <input type="hidden" name="loc_map_default_center_location" value="<?= DBD_GOOGLE_MAPS_DEFAULT_CENTER_LOCATION ?>"/>
+    <input type="hidden" name="loc_map_default_zoom" value="<?= DBD_GOOGLE_MAPS_DEFAULT_ZOOM ?>"/>
+    <input type="hidden" name="loc_map_type" value="<?= DBD_GOOGLE_MAPS_MAP_TYPE ?>"/>
+
 </div>
