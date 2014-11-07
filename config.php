@@ -25,4 +25,4 @@ define ('DBD_GOOGLE_MAPS_DEFAULT_ZOOM', 12);
 define ('DBD_GOOGLE_MAPS_DEFAULT_CENTER_LOCATION', 'Wheatland, WY, US');
 
 // load support files
-require_once (DBD_BASE_PATH . '/classes/dsd-location-manager.php');
+require_once (DBD_BASE_PATH . '/classes/dbd-location-manager.php');

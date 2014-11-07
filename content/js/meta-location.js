@@ -3,7 +3,7 @@ if (! $) var $ = jQuery;
 $(document).ready (function () {
 
    if (! $("div.dbd-meta-location").length) return;
-   
+
    dbd_location_meta.set_map_size ();
    google.maps.event.addDomListener (window, 'load', dbd_location_meta.initialize_map);
 

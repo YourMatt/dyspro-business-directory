@@ -17,11 +17,11 @@ register_deactivation_hook(__FILE__, 'dbd_deactivate');
 register_uninstall_hook (__FILE__, 'dbd_uninstall');
 
 // initialize objects
-$dsd_location_manager = new dsd_location_manager ();
+$dbd_location_manager = new dbd_location_manager ();
 
 // set up actions
 add_action ('init', 'dbd_register_business_post_type');
-add_action ('add_meta_boxes', array ($dsd_location_manager, 'add_meta_boxes'));
+add_action ('add_meta_boxes', array ($dbd_location_manager, 'add_meta_boxes'));
 
 // run when activating the plugin
 function dbd_activate () {
