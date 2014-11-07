@@ -38,7 +38,8 @@ class dbd_location_manager {
         wp_nonce_field ($this->nonce_action, 'dbd_loc_nonce');
 
         // load current values
-        $loc_data = get_post_meta ($post->ID, '_dsd_loc', true);
+        $loc_data = get_metadata ('post', $post->ID); // get_post_meta ($post->ID, '_dsd_loc', true);
+        if (DBD_FORCED_STATE) $loc_data['_dbd_state'][0] = DBD_FORCED_STATE;
 
         // add the form contents
         include (DBD_BASE_PATH . "/content/meta-location.php");

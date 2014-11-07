@@ -22,6 +22,7 @@ define ('DBD_DEFAULT_USER_PASSWORD', 'business'); // when adding a new company, 
 define ('DBD_GOOGLE_MAPS_API_KEY', 'AIzaSyCRyolrfuh3vrUSB6q8phhBU2dT6JNhgYY');
 define ('DBD_GOOGLE_MAPS_MAP_TYPE', 'ROADMAP'); // HYBRID, ROADMAP, SATELLITE, TERRAIN
 define ('DBD_GOOGLE_MAPS_DEFAULT_ZOOM', 12);
+define ('DBD_GOOGLE_MAPS_ADDRESSED_ZOOM', 16);
 define ('DBD_GOOGLE_MAPS_DEFAULT_CENTER_LOCATION', 'Wheatland, WY, US');
 
 // load support files

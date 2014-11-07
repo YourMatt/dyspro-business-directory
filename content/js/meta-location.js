@@ -42,47 +42,71 @@ var dbd_location_meta = {
 
    initialize_map: function () {
 
-      // set up the map to the current address
-      // TODO: Skip the geocode if the lat/lng are already present
-      var geocoder = new google.maps.Geocoder ();
-      geocoder.geocode ( { address: $("input[name=loc_map_default_center_location]").val () }, function (results, status) {
-         if (status != google.maps.GeocoderStatus.OK) return;
+      // pull current coordinate values
+      var currentLat = $("input[name=loc_lat]").val ();
+      var currentLng = $("input[name=loc_lng]").val ();
+
+      // if current coordinates, than build the map to the current location
+      if (currentLat && currentLng) {
 
          // set up the map
-         var centerCoords = results[0].geometry.location;
-         var mapOptions = {
-            center: centerCoords,
-            zoom: parseInt ($("input[name=loc_map_default_zoom]").val ()),
-            zoomControl: false,
-            streetViewControl: false,
-            scrollWheel: false,
-            scaleControl: false,
-            panControl: false,
-            mapTypeControl: false,
-            mapTypeId: eval ("google.maps.MapTypeId." + $("input[name=loc_map_type]").val ())
-         };
+         var centerCoords = new google.maps.LatLng (currentLat, currentLng);
+         var zoom = parseInt ($("input[name=loc_map_addressed_zoom]").val ());
+         dbd_location_meta.build_map (centerCoords, zoom);
 
-         dbd_location_meta.map = new google.maps.Map (
-            $("#dbd-meta-location-map").get(0),
-            mapOptions
-         );
+      }
 
-         // add a marker at the default location - this will move as the user enters the address
-         dbd_location_meta.map_marker = new google.maps.Marker ({
-            position: centerCoords,
-            map: dbd_location_meta.map,
-            draggable: true
+      // if no current coordinates show the map for the default location
+      else {
+
+         var geocoder = new google.maps.Geocoder();
+         geocoder.geocode({address: $("input[name=loc_map_default_center_location]").val()}, function (results, status) {
+            if (status != google.maps.GeocoderStatus.OK) return;
+
+            // set up the map
+            var centerCoords = results[0].geometry.location;
+            var zoom = parseInt($("input[name=loc_map_default_zoom]").val());
+            dbd_location_meta.build_map(centerCoords, zoom);
+
+            // set the coordinates in the display and input fields
+            dbd_location_meta.set_lat_lng_fields(centerCoords.lat(), centerCoords.lng());
+
          });
 
-         // set the marker to update the coordinates when dragged
-         google.maps.event.addListener (dbd_location_meta.map_marker, "dragend", function () {
-            var newCoords = dbd_location_meta.map_marker.getPosition ();
-            dbd_location_meta.set_lat_lng_fields (newCoords.lat (), newCoords.lng ());
-         });
+      }
 
-         // set the coordinates in the display and input fields
-         dbd_location_meta.set_lat_lng_fields (centerCoords.lat (), centerCoords.lng ());
+   },
 
+   build_map: function (coords, zoom) {
+
+      var mapOptions = {
+         center: coords,
+         zoom: zoom,
+         zoomControl: false,
+         streetViewControl: false,
+         scrollWheel: false,
+         scaleControl: false,
+         panControl: false,
+         mapTypeControl: false,
+         mapTypeId: eval ("google.maps.MapTypeId." + $("input[name=loc_map_type]").val ())
+      };
+
+      dbd_location_meta.map = new google.maps.Map (
+         $("#dbd-meta-location-map").get(0),
+         mapOptions
+      );
+
+      // add a marker at the default location - this will move as the user enters the address
+      dbd_location_meta.map_marker = new google.maps.Marker ({
+         position: coords,
+         map: dbd_location_meta.map,
+         draggable: true
+      });
+
+      // set the marker to update the coordinates when dragged
+      google.maps.event.addListener (dbd_location_meta.map_marker, "dragend", function () {
+         var newCoords = dbd_location_meta.map_marker.getPosition ();
+         dbd_location_meta.set_lat_lng_fields (newCoords.lat (), newCoords.lng ());
       });
 
    },
@@ -104,7 +128,7 @@ var dbd_location_meta = {
          // recenter the map and marker
          var centerCoords = results[0].geometry.location;
          dbd_location_meta.map.setCenter (centerCoords);
-         dbd_location_meta.map.setZoom (16);
+         dbd_location_meta.map.setZoom (parseInt ($("input[name=loc_map_addressed_zoom]").val ()));
          dbd_location_meta.map_marker.setPosition (centerCoords);
 
          // set the coordinates in the display and input fields
