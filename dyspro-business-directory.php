@@ -18,10 +18,12 @@ register_uninstall_hook (__FILE__, 'dbd_uninstall');
 
 // initialize objects
 $dbd_location_manager = new dbd_location_manager ();
+$dbd_settings_manager = new dbd_settings_manager ();
 
 // set up actions
 add_action ('init', 'dbd_register_business_post_type');
 add_action ('add_meta_boxes', array ($dbd_location_manager, 'add_meta_boxes'));
+add_action ('admin_menu', array ($dbd_settings_manager, 'register_admin_menu_pages'));
 
 // run when activating the plugin
 function dbd_activate () {

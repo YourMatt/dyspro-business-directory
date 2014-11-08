@@ -16,7 +16,7 @@ class dbd_location_manager {
 
         // add scripts and styles for the meta boxes
         wp_enqueue_script ('dbd_location_js', DBD_BASE_WEB_PATH . 'content/js/meta-location.js', array ('jquery'));
-        wp_enqueue_script ('dbd_location_maps_js', 'https://maps.googleapis.com/maps/api/js?key=' . DBD_GOOGLE_MAPS_API_KEY);
+        wp_enqueue_script ('dbd_location_maps_js', 'https://maps.googleapis.com/maps/api/js?key=' . get_option ('dbd_google_maps_api_key'));
         wp_enqueue_style ('dbd_location_css', DBD_BASE_WEB_PATH . 'content/css/meta.css');
 
         // create the location meta box
@@ -38,8 +38,15 @@ class dbd_location_manager {
         wp_nonce_field ($this->nonce_action, 'dbd_loc_nonce');
 
         // load current values
-        $loc_data = get_metadata ('post', $post->ID); // get_post_meta ($post->ID, '_dsd_loc', true);
-        if (DBD_FORCED_STATE) $loc_data['_dbd_state'][0] = DBD_FORCED_STATE;
+        $loc_data = get_metadata ('post', $post->ID);
+        $forced_state = get_option ('dbd_forced_state_name');
+        if ($forced_state) $loc_data['_dbd_state'][0] = $forced_state;
+
+        // load default map options
+        $map_type = get_option ('dbd_google_maps_type');
+        $map_default_location = get_option ('dbd_default_location');
+        $map_default_zoom = get_option ('dbd_google_maps_default_zoom');
+        $map_addressed_zoom = get_option ('dbd_google_maps_addressed_zoom');
 
         // add the form contents
         include (DBD_BASE_PATH . "/content/meta-location.php");
