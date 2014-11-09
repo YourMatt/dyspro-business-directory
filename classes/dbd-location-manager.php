@@ -89,4 +89,26 @@ class dbd_location_manager {
 
     }
 
+    function get_formatted_address ($post_id) {
+
+        $loc_data = get_metadata ('post', $post_id);
+
+        // set up the address lines
+        $line1 = $loc_data['_dbd_address1'][0];
+        $line2 = $loc_data['_dbd_address2'][0];
+        $line3 = $loc_data['_dbd_city'][0];
+        if ($line3) $line3 .= ', ';
+        $line3 .= $loc_data['_dbd_state'][0];
+        if ($loc_data['_dbd_postalcode']) $line3 .= ' ' . $loc_data['_dbd_postalcode'][0];
+
+        // build the address
+        $address = [];
+        if ($line1) $address[] = $line1;
+        if ($line2) $address[] = $line2;
+        if ($line3) $address[] = $line3;
+
+        return implode ('<br/>', $address);
+        
+    }
+
 }

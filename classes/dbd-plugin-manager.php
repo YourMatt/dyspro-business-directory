@@ -2,7 +2,13 @@
 
 class dbd_plugin_manager {
 
-    public function __construct () {}
+    private $location_manager;
+
+    public function __construct () {
+
+        $this->location_manager = new dbd_location_manager ();
+
+    }
 
     // run when activating the plugin
     function activate () {
@@ -132,6 +138,48 @@ class dbd_plugin_manager {
                 )
             )
         );
+
+        // add columns to the edit form for this new post type
+        add_filter (
+            'manage_edit-' . DBD_POST_TYPE_NAME . '_columns',
+            array ($this, 'set_custom_post_columns' )
+        );
+        add_action (
+            'manage_' . DBD_POST_TYPE_NAME . '_posts_custom_column',
+            array ($this, 'custom_post_column'),
+            10,
+            2
+        );
+
+    }
+
+    function set_custom_post_columns ($columns) {
+
+        $new_columns = array ();
+        $new_columns['cb'] = $columns['cb'];
+        $new_columns['title'] = $columns['title'];
+        $new_columns['address'] = 'Address';
+        $new_columns['status'] = 'Membership Status';
+        $new_columns['date'] = $columns['date'];
+
+        return $new_columns;
+
+    }
+
+    function custom_post_column ($column, $post_id) {
+
+        switch ($column) {
+            case 'address':
+
+                print $this->location_manager->get_formatted_address ($post_id);
+
+                break;
+            case 'status':
+
+                // TODO: Print membership status information
+
+                break;
+        }
 
     }
 
