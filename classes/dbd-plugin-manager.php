@@ -2,11 +2,14 @@
 
 class dbd_plugin_manager {
 
-    private $location_manager;
+    // holds objects for querying post meta data
+    private $location_manager, $contact_manager;
 
+    // initialize query objects
     public function __construct () {
 
         $this->location_manager = new dbd_location_manager ();
+        $this->contact_manager = new dbd_contact_manager ();
 
     }
 
@@ -158,6 +161,7 @@ class dbd_plugin_manager {
         $new_columns = array ();
         $new_columns['cb'] = $columns['cb'];
         $new_columns['title'] = $columns['title'];
+        $new_columns['contact'] = 'Contact Info';
         $new_columns['address'] = 'Address';
         $new_columns['status'] = 'Membership Status';
         $new_columns['date'] = $columns['date'];
@@ -169,15 +173,14 @@ class dbd_plugin_manager {
     function custom_post_column ($column, $post_id) {
 
         switch ($column) {
+            case 'contact':
+                print $this->contact_manager->get_formatted_contact_info ($post_id);
+                break;
             case 'address':
-
                 print $this->location_manager->get_formatted_address ($post_id);
-
                 break;
             case 'status':
-
                 // TODO: Print membership status information
-
                 break;
         }
 

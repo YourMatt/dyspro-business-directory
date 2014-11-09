@@ -1,4 +1,5 @@
 
+/* LOCATION META FORM */
 div.dbd-meta-location table {
 	width: 100%;
 	padding-right: 15px;
@@ -25,4 +26,21 @@ td.dbd-coords {
 	font-style: italic;
 	padding-top: 10px;
 	text-align: center;
+}
+
+/* CONTACT META FORM */
+div.dbd-meta-contact table {
+	width: 100%;
+}
+div.dbd-meta-contact table td {
+	white-space: nowrap;
+}
+div.dbd-meta-contact table td.col1 {
+	width: 20%;
+}
+div.dbd-meta-contact table td.col2 {
+	width: 80%;
+}
+div.dbd-meta-contact table td input {
+	width: 100%;
 }

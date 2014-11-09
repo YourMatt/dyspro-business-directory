@@ -2,7 +2,7 @@
 
 class dbd_location_manager {
 
-    private $nonce_action = 'dbd_loc';
+    private $nonce_action = 'dbd_location';
 
     public function __construct () {
 
@@ -26,9 +26,6 @@ class dbd_location_manager {
             array ($this, 'build_location_meta_form'),
             DBD_POST_TYPE_NAME
         );
-
-        // create the membership information meta box
-        // TODO: add call to create the membership box
 
     }
 
@@ -62,30 +59,15 @@ class dbd_location_manager {
         if (! current_user_can ('edit_dbd_post', $post_id)) return $post_id;
 
         // save the location data to meta fields
-        $this->save_location_meta_field ($post_id, 'loc_address1', '_dbd_address1');
-        $this->save_location_meta_field ($post_id, 'loc_address2', '_dbd_address2');
-        $this->save_location_meta_field ($post_id, 'loc_city', '_dbd_city');
-        $this->save_location_meta_field ($post_id, 'loc_state', '_dbd_state');
-        $this->save_location_meta_field ($post_id, 'loc_postalcode', '_dbd_postalcode');
-        $this->save_location_meta_field ($post_id, 'loc_lat', '_dbd_lat');
-        $this->save_location_meta_field ($post_id, 'loc_lng', '_dbd_lng');
+        dbd_utilities::save_meta_field ($post_id, 'loc_address1', '_dbd_address1');
+        dbd_utilities::save_meta_field ($post_id, 'loc_address2', '_dbd_address2');
+        dbd_utilities::save_meta_field ($post_id, 'loc_city', '_dbd_city');
+        dbd_utilities::save_meta_field ($post_id, 'loc_state', '_dbd_state');
+        dbd_utilities::save_meta_field ($post_id, 'loc_postalcode', '_dbd_postalcode');
+        dbd_utilities::save_meta_field ($post_id, 'loc_lat', '_dbd_lat');
+        dbd_utilities::save_meta_field ($post_id, 'loc_lng', '_dbd_lng');
 
         return $post_id;
-
-    }
-
-    function save_location_meta_field ($post_id, $field_name, $meta_name) {
-
-        $current_value = get_post_meta ($post_id, $meta_name, true);
-        $new_value = $_POST[$field_name];
-
-        if ($current_value) {
-            if (! $new_value) delete_post_meta ($post_id, $meta_name);
-            else update_post_meta ($post_id, $meta_name, $new_value);
-        }
-        elseif ($new_value) {
-            add_post_meta ($post_id, $meta_name, $new_value, true);
-        }
 
     }
 
@@ -108,7 +90,7 @@ class dbd_location_manager {
         if ($line3) $address[] = $line3;
 
         return implode ('<br/>', $address);
-        
+
     }
 
 }

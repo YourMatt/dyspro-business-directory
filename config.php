@@ -22,6 +22,8 @@ define ('DBD_GOOGLE_MAPS_ADDRESSED_ZOOM', 16);
 define ('DBD_GOOGLE_MAPS_DEFAULT_CENTER_LOCATION', 'United States');
 
 // load support files
+require_once (DBD_BASE_PATH . '/classes/dbd-utilities.php');
 require_once (DBD_BASE_PATH . '/classes/dbd-plugin-manager.php');
 require_once (DBD_BASE_PATH . '/classes/dbd-settings-manager.php');
 require_once (DBD_BASE_PATH . '/classes/dbd-location-manager.php');
+require_once (DBD_BASE_PATH . '/classes/dbd-contact-manager.php');
