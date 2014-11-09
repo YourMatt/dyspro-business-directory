@@ -3,7 +3,7 @@ global $wpdb;
 
 // define paths
 define ('DBD_BASE_PATH', dirname (__FILE__));
-define ('DBD_BASE_WEB_PATH', plugin_dir_url( __FILE__ ));
+define ('DBD_BASE_WEB_PATH', plugin_dir_url ( __FILE__ ));
 
 // define roles
 define ('DBD_POST_TYPE_NAME', 'business');
@@ -22,5 +22,6 @@ define ('DBD_GOOGLE_MAPS_ADDRESSED_ZOOM', 16);
 define ('DBD_GOOGLE_MAPS_DEFAULT_CENTER_LOCATION', 'United States');
 
 // load support files
+require_once (DBD_BASE_PATH . '/classes/dbd-plugin-manager.php');
 require_once (DBD_BASE_PATH . '/classes/dbd-settings-manager.php');
 require_once (DBD_BASE_PATH . '/classes/dbd-location-manager.php');
