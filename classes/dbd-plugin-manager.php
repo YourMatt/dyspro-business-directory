@@ -138,7 +138,8 @@ class dbd_plugin_manager {
                     'thumbnail',
                     'title',
                     'editor'
-                )
+                ),
+                'taxonomies' => array ('category')
             )
         );
 
