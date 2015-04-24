@@ -95,6 +95,33 @@ class dbd_plugin_manager {
 
     }
 
+    // create the taxonomy for categorization of businesses - this is loaded on init
+    function register_business_taxonomy () {
+
+        $taxonomy_labels = array (
+            'name' => 'Business Types',
+            'singular_name' => 'Business Type',
+            'search_items' => 'Search Business Types',
+            'all_items' => 'All Business Types',
+            'edit_item' => 'Edit Business Type',
+            'update_item' => 'Update Business Type',
+            'add_new_item' => 'Add Business Type',
+            'new_item_name' => 'New Business Type',
+            'menu_name' => 'Business Type'
+        );
+
+        $taxonomy_options = array (
+            'hierarchical' => true,
+            'labels' => $taxonomy_labels,
+            'show_ui' => true,
+            'show_admin_column' => true,
+            'show_tagcloud' => false
+        );
+
+        register_taxonomy (DBD_CATEGORY_TYPE_NAME, DBD_POST_TYPE_NAME, $taxonomy_options);
+
+    }
+
     // add the business post type - this is loaded on init
     function register_business_post_type () {
 
@@ -139,7 +166,7 @@ class dbd_plugin_manager {
                     'title',
                     'editor'
                 ),
-                'taxonomies' => array ('category')
+                'taxonomies' => array (DBD_CATEGORY_TYPE_NAME)
             )
         );
 

@@ -6,7 +6,8 @@ define ('DBD_BASE_PATH', dirname (__FILE__));
 define ('DBD_BASE_WEB_PATH', plugin_dir_url ( __FILE__ ));
 
 // define roles
-define ('DBD_POST_TYPE_NAME', 'business');
+define ('DBD_POST_TYPE_NAME', 'dbd_business');
+define ('DBD_CATEGORY_TYPE_NAME', 'dbd_business_type');
 define ('DBD_ROLE_NAME', 'dbd_member');
 define ('DBD_ROLE_DISPLAY_NAME', 'Business Member'); // new member business user accounts will be given this role by default
 
@@ -27,3 +28,4 @@ require_once (DBD_BASE_PATH . '/classes/dbd-plugin-manager.php');
 require_once (DBD_BASE_PATH . '/classes/dbd-settings-manager.php');
 require_once (DBD_BASE_PATH . '/classes/dbd-location-manager.php');
 require_once (DBD_BASE_PATH . '/classes/dbd-contact-manager.php');
+require_once (DBD_BASE_PATH . '/classes/dbd-shortcode-manager.php');
