@@ -173,7 +173,15 @@ class dbd_plugin_manager {
         // add columns to the edit form for this new post type
         add_filter (
             'manage_edit-' . DBD_POST_TYPE_NAME . '_columns',
-            array ($this, 'set_custom_post_columns' )
+            array ($this, 'set_custom_post_columns')
+        );
+        add_filter (
+            'manage_edit-' . DBD_POST_TYPE_NAME . '_sortable_columns',
+            array ($this, 'set_sortable_post_columns')
+        );
+        add_filter (
+            'request',
+            array ($this, 'sort_column')
         );
         add_action (
             'manage_' . DBD_POST_TYPE_NAME . '_posts_custom_column',
@@ -191,10 +199,49 @@ class dbd_plugin_manager {
         $new_columns['title'] = $columns['title'];
         $new_columns['contact'] = 'Contact Info';
         $new_columns['address'] = 'Address';
+        $new_columns['types'] = 'Business Type';
         $new_columns['status'] = 'Membership Status';
         $new_columns['date'] = $columns['date'];
 
         return $new_columns;
+
+    }
+
+    function set_sortable_post_columns ($columns) {
+
+        return array (
+            'title' => 'title',
+            'contact' => 'contact',
+            'address' => 'address',
+            //'types' => 'types', // TODO: Add sort for taxonomy categories
+            //'status' => 'status', // TODO: Add sort for status
+            'date' => 'date'
+        );
+
+    }
+
+    function sort_column ($request) {
+
+        if (! $request['orderby']) return;
+
+        switch ($request['orderby']) {
+
+            case 'contact':
+                $request = array_merge ($request, array (
+                    'meta_key' => '_dbd_name',
+                    'orderby' => 'meta_value'
+                ));
+                break;
+            case 'address':
+                $request = array_merge ($request, array (
+                    'meta_key' => '_dbd_address1',
+                    'orderby' => 'meta_value'
+                ));
+                break;
+
+        }
+
+        return $request;
 
     }
 
@@ -207,10 +254,25 @@ class dbd_plugin_manager {
             case 'address':
                 print $this->location_manager->get_formatted_address ($post_id);
                 break;
+            case 'types':
+                print $this->get_business_types ($post_id);
+                break;
             case 'status':
                 // TODO: Print membership status information
                 break;
         }
+
+    }
+
+    function get_business_types ($post_id) {
+
+        $post_terms = wp_get_post_terms ($post_id, DBD_CATEGORY_TYPE_NAME);
+        $types = array ();
+        foreach ($post_terms as $post_term) {
+            $types[] = $post_term->name;
+        }
+
+        return implode (", ", $types);
 
     }
 
