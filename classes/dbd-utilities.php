@@ -17,4 +17,16 @@ class dbd_utilities {
 
     }
 
+    public static function get_formatted_address ($post_meta) {
+
+        $address = $post_meta['_dbd_address1'][0];
+        if ($post_meta['_dbd_address2']) $address .= '; ' . $post_meta['_dbd_address2'][0];
+        $address .= '<br/>';
+
+        $address .= $post_meta['_dbd_city'][0] . ', ' . $post_meta['_dbd_state'][0] . ' ' . $post_meta['_dbd_postalcode'][0];
+
+        return $address;
+
+    }
+
 }
