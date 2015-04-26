@@ -11,6 +11,8 @@ class dbd_shortcode_manager {
 
         foreach ($categories as $category) {
 
+            if ($_REQUEST['type'] && $_REQUEST['type'] != $category->slug) continue;
+
             $business_list .= '<h2>' . $category->name . '</h2>';
             $business_list .= '<ul class="businesses">';
 
@@ -59,6 +61,7 @@ class dbd_shortcode_manager {
         $categories = get_terms (DBD_CATEGORY_TYPE_NAME);
 
         $category_list = '<ul>';
+        $category_list .= '<li><a href="' . get_permalink () . '"><span class="indicator"></span>All Business Types</a></li>';
         foreach ($categories as $category) {
             $category_list .= '<li><a href="?type=' . $category->slug . '"><span class="indicator"></span>' . $category->name . '</a></li>';
         }
