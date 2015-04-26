@@ -211,10 +211,10 @@ class dbd_plugin_manager {
 
         return array (
             'title' => 'title',
-            'contact' => 'contact',
-            'address' => 'address',
-            //'types' => 'types', // TODO: Add sort for taxonomy categories
-            //'status' => 'status', // TODO: Add sort for status
+            'contact' => 'dbd_contact',
+            'address' => 'dbd_address',
+            //'types' => 'dbd_types', // TODO: Add sort for taxonomy categories
+            //'status' => 'dbd_status', // TODO: Add sort for status
             'date' => 'date'
         );
 
@@ -222,17 +222,17 @@ class dbd_plugin_manager {
 
     function sort_column ($request) {
 
-        if (! $request['orderby']) return;
+        if (! $request['orderby']) return $request;
 
         switch ($request['orderby']) {
 
-            case 'contact':
+            case 'dbd_contact':
                 $request = array_merge ($request, array (
                     'meta_key' => '_dbd_name',
                     'orderby' => 'meta_value'
                 ));
                 break;
-            case 'address':
+            case 'dbd_address':
                 $request = array_merge ($request, array (
                     'meta_key' => '_dbd_address1',
                     'orderby' => 'meta_value'
