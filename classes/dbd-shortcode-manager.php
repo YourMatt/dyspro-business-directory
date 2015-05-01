@@ -33,7 +33,7 @@ class dbd_shortcode_manager {
             foreach ($businesses as $business) {
 
                 $business_meta = get_post_meta ($business->ID);
-                $business_thumb = get_the_post_thumbnail ($business->ID);
+                $business_thumb = get_the_post_thumbnail ($business->ID, "full");
                 $link = '/directory/' . $business->post_name;
 
                 $business_list .= '<li>';
