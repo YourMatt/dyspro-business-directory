@@ -54,6 +54,9 @@ var dbd_location_meta = {
          var zoom = parseInt ($("input[name=loc_map_addressed_zoom]").val ());
          dbd_location_meta.build_map (centerCoords, zoom);
 
+         // set the coordinates in the display and input fields
+         dbd_location_meta.set_lat_lng_fields(centerCoords.lat(), centerCoords.lng());
+
       }
 
       // if no current coordinates show the map for the default location
