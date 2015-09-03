@@ -16,7 +16,7 @@ class dbd_location_manager {
 
         // add scripts and styles for the meta boxes
         wp_enqueue_script ('dbd_location_js', DBD_BASE_WEB_PATH . 'content/js/meta-location.js', array ('jquery'));
-        wp_enqueue_script ('dbd_location_maps_js', 'https://maps.googleapis.com/maps/api/js?key=' . get_option ('dbd_google_maps_api_key'));
+        wp_enqueue_script ('google_maps_js', 'https://maps.googleapis.com/maps/api/js?key=' . get_option ('dbd_google_maps_api_key'));
         wp_enqueue_style ('dbd_location_css', DBD_BASE_WEB_PATH . 'content/css/meta.css');
 
         // create the location meta box
