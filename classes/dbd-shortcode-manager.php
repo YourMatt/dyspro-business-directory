@@ -19,7 +19,7 @@ class dbd_shortcode_manager {
             $businesses = get_posts (array (
                 'post_type' => DBD_POST_TYPE_NAME,
                 'posts_per_page' => -1, // always return all
-                'order_by' => 'post_title',
+                'orderby' => 'post_title',
                 'order' => 'ASC',
                 'tax_query' => array(
                     array(
